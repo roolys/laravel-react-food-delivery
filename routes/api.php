@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\MealController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,16 +17,20 @@ use App\Http\Controllers\Api\AuthController;
 */
 
 
-Route::group(['middleware' => 'api', 'prefix' => 'auth'], function($router){
+Route::group(
+    ['middleware' => 'api', 'prefix' => 'auth'],
+    function ($router) {
 
-    // This Route is Post request because we are storing the data of upcoming request
-Route::post('/register', [AuthController::class, 'register']);
-// These Route is Post request because we are storing the data of upcoming request
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
-// These Route is get request because we are found the data of store request
+        // This Route is Post request because we are storing the data of upcoming request
+        Route::post('/register', [AuthController::class, 'register']);
+        // These Route is Post request because we are storing the data of upcoming request
+        Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+        // These Route is get request because we are found the data of store request
 
-Route::get('/profile', [AuthController::class, 'profile']);
+        Route::get('/profile', [AuthController::class, 'profile']);
 
+}
 
-});
+);
+Route::apiResource('/meals', MealController::class);
