@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MealController;
+use App\Http\Controllers\Api\FileMealController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +18,14 @@ use App\Http\Controllers\Api\MealController;
 */
 
 
-Route::group(
-    ['middleware' => 'api', 'prefix' => 'auth'],
-    function ($router) {
+  // These Route is Post request because we are storing the data of upcoming request
+  Route::post('/login', [AuthController::class, 'login']);
+
+Route::group( ['middleware' => 'api'], function () {
 
         // This Route is Post request because we are storing the data of upcoming request
         Route::post('/register', [AuthController::class, 'register']);
-        // These Route is Post request because we are storing the data of upcoming request
-        Route::post('/login', [AuthController::class, 'login']);
+
         Route::post('/logout', [AuthController::class, 'logout']);
         // These Route is get request because we are found the data of store request
 
@@ -34,3 +35,7 @@ Route::group(
 
 );
 Route::apiResource('/meals', MealController::class);
+
+Route::apiResource('/file_meals', FileMealController::class);
+// Route::post('/meals', [MealController::class, 'store']);
+

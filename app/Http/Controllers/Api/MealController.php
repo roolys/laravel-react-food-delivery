@@ -6,6 +6,7 @@ use App\Models\Meal;
 use App\Http\Requests\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MealResource;
+use Illuminate\Validation\Rules\File;
 use App\Http\Resources\MealCollection;
 use App\Http\Requests\StoreMealRequest;
 use App\Http\Requests\UpdateMealRequest;
@@ -32,6 +33,13 @@ class MealController extends Controller
     {
         //
         $meal = Meal::create($request->validated());
+
+        $file_name1 = time() .'.'. request()->image->getClientOriginalExtension();
+        request()->image->move(public_path('images'), $file_name1);
+
+        $meal->image = $file_name1;
+        $meal->save();
+
         return response()->json([
             'status' => 'success',
             'message' => 'Meal stored Succesfully',
@@ -55,6 +63,11 @@ class MealController extends Controller
     {
         //
         $meal->update($request->validated());
+        $image=$request->file('image');
+
+        if ($request->hasFile('image')) {
+            $image->$request->file('image')->store('images');
+        }
         return response()->json([
             'status' => 'success',
             'message' => 'Meal updated',

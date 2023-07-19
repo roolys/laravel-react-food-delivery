@@ -63,12 +63,14 @@ class AuthController extends Controller
 
         }
         // Now if token generated we just need to return our response here
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Logged in successfully',
-            'token' => $token
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => 'Logged in successfully',
+        //     'token' => $token
 
-        ]);
+        // ]);
+
+        return $this->respondWithToken($token);
     }
 
     public function profile()
@@ -86,5 +88,21 @@ class AuthController extends Controller
                 'message' => 'Succesfully logged out'
             ]);
 
+        }
+
+        // Refresh Token
+        public function refresh()
+        {
+            // return $this->respondWithToken(auth()->refresh());
+        }
+
+        protected function respondWithToken($token)
+        {
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                // 'expires_in' => auth()->factory()->getTTL() * 60,
+                'user' => auth()->user()
+            ]);
         }
 }
