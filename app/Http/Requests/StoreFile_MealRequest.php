@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMealRequest extends FormRequest
+class StoreFile_MealRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,16 +23,14 @@ class StoreMealRequest extends FormRequest
     {
         return [
             //
+            'pic1'=>'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+            'pic2'=>'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+            'pic3'=>'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+            'pic4'=>'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+            'meal_id'=>'required',
+            'code_meal'=>'required'
 
-            'name'=>['required' ,'min:3', 'max:20'],
-            'image'=>'required|image|mimes:jpeg,png,jpg,svg|max:2048',
-            // 'image'=>['required'],
 
-            'description'=>['required' ,'min:3', 'max:20'],
-            'price'=>['required' ,'min:3', 'max:20'],
-
-
-            // 'slug'=>['required', 'unique:skills,slug']
 
         ];
     }
